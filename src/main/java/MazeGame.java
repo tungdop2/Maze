@@ -6,6 +6,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import main.java.animation.*;
@@ -18,8 +19,8 @@ import java.util.List;
 import java.util.Random;
 
 public class MazeGame extends Application {
-    public static final int MAZE_SIZE = 10;
-    public static int TIME_LIMIT = 15000;
+    public static final int MAZE_SIZE = 15;
+    public static int TIME_LIMIT = 30000;
     private static HashSet<String> currentlyActiveKeys = new HashSet<>();
     private static int[][] map;
     private static int[][] bigmap;
@@ -153,10 +154,10 @@ public class MazeGame extends Application {
                 map[0][j] |= 2;
             }
         }
-        for(int j = 0; j < MAZE_SIZE; j ++) {
-            Wc wc = new Wc(j, MAZE_SIZE + 1, Sprite.wc.getFxImage());
-            stillObjects.add(wc);
-        }
+//        for(int j = 0; j < MAZE_SIZE; j ++) {
+//            Wc wc = new Wc(j, MAZE_SIZE + 1, Sprite.wc.getFxImage());
+//            stillObjects.add(wc);
+//        }
 
         for (int i = 0; i < MAZE_SIZE + 1; i++) {
             for (int j = 0; j < MAZE_SIZE; j++) {
@@ -231,6 +232,12 @@ public class MazeGame extends Application {
 
     public void update() {
         clock.setText("Time: " + Float.toString((float) (TIME_LIMIT - getTime()) / 1000));
+        if (getTime() * 3 > TIME_LIMIT * 2) {
+            clock.setFill(Color.RED);
+        }
+        else {
+            clock.setFill(Color.BLACK);
+        }
         if (p.getY() /  Sprite.SCALED_SIZE == MAZE_SIZE + 1) {
             TIME_LIMIT = TIME_LIMIT * 3 / 4;
             restart();
